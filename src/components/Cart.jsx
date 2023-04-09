@@ -15,18 +15,34 @@ const Cart = () => {
         }
     }
 
+    // Clear Cart
     const handleClearCart = () => {
+        setCart([])
         deleteShoppingCart()
         const notify = () => toast.error(`Clear cart successfully`);
         notify();
     }
 
+    // Remove product from cart
     const handleRemoveItem = (productID, productName) => {
         removeProductFromLocal(productID)
         const remainingProducts = cart.filter(product => product.id !== productID)
         setCart(remainingProducts)
         const notify = () => toast.error(`${productName} remove successfully`);
         notify();
+    }
+
+    // Place the order
+    const handlePlaceOrder = () => {
+        if (cart.length > 0) {
+            setCart([])
+            deleteShoppingCart()
+            const notify = () => toast.success(`Place order successfully`);
+            notify();
+        } else {
+            const notify = () => toast.error(`Cart is empty`);
+            notify();
+        }
     }
 
     return (
@@ -45,18 +61,18 @@ const Cart = () => {
                 <div className="flex justify-end space-x-4">
                     {
                         cart.length > 0 ? (
-                            <Link to={'/cart'}>
-                                <button onClick={handleClearCart} type="button" className="btn-outlined">Clear <span
-                                    className="sr-only sm:not-sr-only">Cart</span>
-                                </button>
-                            </Link>
+                            <button onClick={handleClearCart} type="button" className="btn-outlined">Clear <span
+                                className="sr-only sm:not-sr-only">Cart</span>
+                            </button>
                         ) : (<Link to={'/shop'}>
                             <button type="button" className="btn-outlined">Back <span
                                 className="sr-only sm:not-sr-only">To Shop</span>
                             </button>
                         </Link>)
                     }
-                    <button type="button" className="btn-primary">Place Order</button>
+                    <button onClick={handlePlaceOrder} type="button"
+                            className="btn-primary">Place Order
+                    </button>
                 </div>
             </div>
             <Toaster/>

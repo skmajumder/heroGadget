@@ -10,6 +10,7 @@ import Shop from "./components/Shop";
 import fetchProductData from "./loaders/loadingProductsData";
 import Cart from "./components/Cart";
 import getCartProductsData from "./loaders/loadingCartProductsData";
+import {Toaster} from "react-hot-toast";
 
 const router = createBrowserRouter([
     {
@@ -27,5 +28,8 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <RouterProvider router={router}/>
+    <>
+        <Toaster/>
+        <RouterProvider router={router}/>
+    </>
 );
