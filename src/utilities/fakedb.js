@@ -6,7 +6,7 @@ const getStoredShoppingCart = () => {
     return shoppingCart;
 };
 
-// Add products data to the local storage
+// Add product data to the local storage
 const addToDB = (productID) => {
     const shoppingCart = getStoredShoppingCart();
     // check if product has quantity
@@ -16,9 +16,18 @@ const addToDB = (productID) => {
     localStorage.setItem("shopping-cart", JSON.stringify(shoppingCart));
 };
 
+// Remove specific product from local storage
+const removeProductFromLocal = (productID) => {
+    const shoppingCart = getStoredShoppingCart();
+    if (shoppingCart && productID in shoppingCart) {
+        delete shoppingCart[productID];
+        localStorage.setItem("shopping-cart", JSON.stringify(shoppingCart));
+    }
+}
+
 // Delete shopping cart from local storage
 const deleteShoppingCart = () => {
     localStorage.removeItem("shopping-cart");
 };
 
-export {getStoredShoppingCart, addToDB, deleteShoppingCart};
+export {getStoredShoppingCart, addToDB, removeProductFromLocal, deleteShoppingCart};
