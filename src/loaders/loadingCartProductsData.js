@@ -18,7 +18,7 @@ const getCartProductsData = async () => {
             cartProducts.push(foundProduct)
         }
     }
-    return cartProducts
+    return {cartProducts, products}
 }
 
 export default getCartProductsData

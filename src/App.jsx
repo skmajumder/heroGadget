@@ -1,19 +1,27 @@
-import React from "react";
+import React, {createContext, useState} from "react";
 import Header from "./components/Header";
-import { Outlet } from "react-router-dom";
+import {Outlet, useLoaderData} from "react-router-dom";
 import Footer from "./components/Footer";
-import Home from "./components/Home";
+
+export const ProductsContext = createContext([])
+export const CartProductsContext = createContext([])
 
 const App = () => {
-  return (
-    <>
-      <Header />
-      <main className="main min-h-[calc(100vh-137px)]">
-        <Outlet />
-      </main>
-      <Footer />
-    </>
-  );
+    const {cartProducts, products} = useLoaderData()
+    const [cart, setCart] = useState(cartProducts)
+    return (
+        <>
+            <ProductsContext.Provider value={products}>
+                <CartProductsContext.Provider value={[cart, setCart]}>
+                    <Header/>
+                    <main className="main min-h-[calc(100vh-137px)]">
+                        <Outlet/>
+                    </main>
+                    <Footer/>
+                </CartProductsContext.Provider>
+            </ProductsContext.Provider>
+        </>
+    );
 };
 
 export default App;
